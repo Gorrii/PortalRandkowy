@@ -12,11 +12,15 @@ export class ValueComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
-  ngOnInit() {
+  ngOnInit () {
     this.getValues();
   }
 
-  getValues(){
-    this.http.get('http://localhost:5000/WeatherForecast').subscribe(response =>{this.values = response},error => {console.log(error)});
+  getValues () {
+    this.http.get('https://localhost:5001/WeatherForecast').subscribe(response => {
+      this.values = response;
+    }, error => {
+      console.log(error);
+    });
   }
 }

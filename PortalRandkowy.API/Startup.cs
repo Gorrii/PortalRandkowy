@@ -29,6 +29,8 @@ namespace PortalRandkowy.api
         {
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnecion")));
             services.AddControllers();
+            services.AddCors();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,10 +47,12 @@ namespace PortalRandkowy.api
 
             app.UseAuthorization();
 
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
+            }); 
         }
     }
 }
