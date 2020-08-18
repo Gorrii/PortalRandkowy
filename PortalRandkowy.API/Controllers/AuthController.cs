@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using PortalRandkowy.API.Data;
 using PortalRandkowy.API.Dtos;
 using PortalRandkowy.API.Models;
 
-namespace PortalRandkowy.api.Controllers
+namespace PortalRandkowy.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class AuthController : ControllerBase
     {
-   private readonly IAuthRepository _repository;
-        public WeatherForecastController(IAuthRepository repository)
+        private readonly IAuthRepository _repository;
+        public AuthController(IAuthRepository repository)
         {
             _repository = repository;
         }
