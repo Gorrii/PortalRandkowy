@@ -8,7 +8,7 @@ import { from } from 'rxjs';
 })
 export class AuthService {
 
-  baseUrl = 'https://localhost:5000/auth/';
+  baseUrl = 'https://localhost:5001/auth/';
 
 constructor(private http: HttpClient) { }
 
