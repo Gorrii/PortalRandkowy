@@ -10,9 +10,11 @@ export class NavComponent implements OnInit {
   model: any = {};
   constructor() { }
 
+  // tslint:disable-next-line: typedef
   ngOnInit() {
   }
 
+  // tslint:disable-next-line: typedef
   login()
   {
     console.log(this.model);
