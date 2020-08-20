@@ -12,28 +12,19 @@ namespace PortalRandkowy.api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+public class WeatherForecastController : ControllerBase
     {
-   private readonly IAuthRepository _repository;
-        public WeatherForecastController(IAuthRepository repository)
+        private readonly DataContext _context;
+        public WeatherForecastController(DataContext context)
         {
-            _repository = repository;
+            _context = context;
         }
-
-        [HttpPost("register")]
-        public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
+        
+        [HttpGet]
+        public ActionResult Get()
         {
-            userForRegisterDto.UserName = userForRegisterDto.UserName.ToLower();
-            if (await _repository.UserExists(userForRegisterDto.UserName))
-                return BadRequest("User already exist");
-
-            var userToCreate = new User{
-                UserName = userForRegisterDto.UserName
-            };
-
-            var createdUser = await _repository.Register(userToCreate,userForRegisterDto.Password);
-
-            return StatusCode(201);
+         var values = _context.Values.ToList();
+         return Ok(values);
         }
     }
 }
