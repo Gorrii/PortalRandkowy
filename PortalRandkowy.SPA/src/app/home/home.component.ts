@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   // tslint:disable-next-line: typedef
   registerToggle()
   {
-    this.registerMode = ! this.registerMode;
+    this.registerMode = true;
   }
 
   // tslint:disable-next-line: typedef
@@ -28,5 +28,10 @@ export class HomeComponent implements OnInit {
     }, error => {
       console.log(error);
     });
+  }
+  // tslint:disable-next-line: typedef
+  CancelRegisterMode(registerMode: boolean)
+  {
+    this.registerMode = registerMode;
   }
 }
