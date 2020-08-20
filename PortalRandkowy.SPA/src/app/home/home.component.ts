@@ -8,12 +8,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HomeComponent implements OnInit {
   registerMode = false;
-  values: any;
+
   constructor(private http: HttpClient) { }
 
   // tslint:disable-next-line: typedef
   ngOnInit() {
-    this.getValues();
+
   }
   // tslint:disable-next-line: typedef
   registerToggle()
@@ -22,13 +22,8 @@ export class HomeComponent implements OnInit {
   }
 
   // tslint:disable-next-line: typedef
-  getValues() {
-    this.http.get('https://localhost:5001/WeatherForecast').subscribe(response => {
-      this.values = response;
-    }, error => {
-      console.log(error);
-    });
-  }
+
+
   // tslint:disable-next-line: typedef
   CancelRegisterMode(registerMode: boolean)
   {
