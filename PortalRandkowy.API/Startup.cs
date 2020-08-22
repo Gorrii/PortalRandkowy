@@ -32,8 +32,9 @@ namespace PortalRandkowy.api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnecion")));
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);         
             services.AddCors();
+            
             services.AddTransient<Seed>();
             services.AddScoped<IAuthRepository , AuthRepository>();
             services.AddScoped<IGenericRepository, GenericRepository>();
@@ -44,10 +45,10 @@ namespace PortalRandkowy.api
                         {
                             ValidateIssuerSigningKey =true,
                             IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
-                            ValidateIssuer =false,
-                            ValidateAudience =false
+                            ValidateIssuer = false,
+                            ValidateAudience = false
                         };
-                         });
+                        });
             
         }
 
@@ -63,11 +64,11 @@ namespace PortalRandkowy.api
 
             app.UseHttpsRedirection();
 
-            app.UseRouting();
-
-            app.UseAuthorization();
+            app.UseRouting();           
 
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            
+            app.UseAuthorization();
 
             app.UseAuthentication();
 
