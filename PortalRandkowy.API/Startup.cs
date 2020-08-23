@@ -67,6 +67,8 @@ namespace PortalRandkowy.api
             app.UseRouting();           
 
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            
+            app.UseAuthorization();
 
             app.UseAuthentication();
 
