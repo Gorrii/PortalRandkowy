@@ -5,7 +5,7 @@ using PortalRandkowy.API.Data;
 
 namespace PortalRandkowy.API.Controllers
 {
-    
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
