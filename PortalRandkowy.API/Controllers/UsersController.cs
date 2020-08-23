@@ -1,9 +1,12 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PortalRandkowy.API.Data;
+using PortalRandkowy.API.Dtos;
 
 namespace PortalRandkowy.API.Controllers
 {
@@ -13,24 +16,29 @@ namespace PortalRandkowy.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
-        public UsersController(IUserRepository userRepository)
+        private readonly IMapper _mapper;
+        public UsersController(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
-
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
             var users = await _userRepository.GetUsers();
-            return Ok(users);
+
+            var userToReturn = _mapper.Map<IEnumerable<UserForListDto>>(users);
+            
+            return Ok(userToReturn);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
             var user = await _userRepository.GetUser(id);
-            return Ok(user);
+            var userToReturn = _mapper.Map<UserForDetailesDto>(user);
+            return Ok(userToReturn);
         }   
 
     }

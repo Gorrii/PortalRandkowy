@@ -16,6 +16,8 @@ using PortalRandkowy.API.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using AutoMapper;
+
 
 namespace PortalRandkowy.api
 {
@@ -34,7 +36,7 @@ namespace PortalRandkowy.api
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnecion")));
             services.AddControllers().AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);         
             services.AddCors();
-            
+            services.AddAutoMapper(typeof(Startup));
             services.AddTransient<Seed>();
             services.AddScoped<IAuthRepository , AuthRepository>();
             services.AddScoped<IGenericRepository, GenericRepository>();
