@@ -23,6 +23,7 @@
     "@fortawesome/fontawesome-free": "^5.14.0",
     "alertifyjs": "^1.13.1",
     "bootstrap": "^4.5.2",
+    "bootswatch": "^4.5.2",
     "ngx-bootstrap": "^5.6.1",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
