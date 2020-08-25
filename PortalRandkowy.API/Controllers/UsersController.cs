@@ -11,7 +11,7 @@ using PortalRandkowy.API.Dtos;
 namespace PortalRandkowy.API.Controllers
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
