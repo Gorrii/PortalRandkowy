@@ -16,6 +16,7 @@ import { AlertifyService } from './_services/alertify.service';
 import { LikesComponent } from './likes/likes.component';
 import { MessagesComponent } from './messages/messages.component';
 import {appRoutes} from './routes';
+import {AuthGuard} from '../app/_guards/auth.guard';
 
 
 export function GetToken(){
@@ -48,7 +49,8 @@ export function GetToken(){
   providers: [
     AuthService,
     AlertifyService,
-    UserService
+    UserService,
+    AuthGuard
 
   ],
   bootstrap: [AppComponent]
