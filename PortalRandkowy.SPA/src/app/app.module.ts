@@ -6,6 +6,8 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { from } from 'rxjs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NavComponent } from './nav/nav.component';
 import { AuthService } from './_services/auth.service';
 import { HomeComponent } from './home/home.component';
@@ -43,8 +45,11 @@ export function GetToken(){
           allowedDomains: ['localhost:5001'],
           disallowedRoutes: ['localhost:5001/api/auth'],
     }
+    
   }),
-  RouterModule.forRoot(appRoutes)
+  RouterModule.forRoot(appRoutes),
+  BrowserAnimationsModule,
+  BsDropdownModule.forRoot()
   ],
   providers: [
     AuthService,
