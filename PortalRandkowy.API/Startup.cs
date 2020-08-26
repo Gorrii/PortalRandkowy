@@ -17,7 +17,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using AutoMapper;
-
+using System.Net;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using PortalRandkowy.API.Helpers;
 
 namespace PortalRandkowy.api
 {
@@ -34,24 +37,25 @@ namespace PortalRandkowy.api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnecion")));
-            services.AddControllers().AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);         
+            services.AddControllers().AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddCors();
             services.AddAutoMapper(typeof(Startup));
             services.AddTransient<Seed>();
-            services.AddScoped<IAuthRepository , AuthRepository>();
+            services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IGenericRepository, GenericRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                         .AddJwtBearer(options =>{
-                        options.TokenValidationParameters = new TokenValidationParameters
-                        {
-                            ValidateIssuerSigningKey =true,
-                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
-                            ValidateIssuer = false,
-                            ValidateAudience = false
-                        };
-                        });
-            
+                         .AddJwtBearer(options =>
+                         {
+                             options.TokenValidationParameters = new TokenValidationParameters
+                             {
+                                 ValidateIssuerSigningKey = true,
+                                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                                 ValidateIssuer = false,
+                                 ValidateAudience = false
+                             };
+                         });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,15 +65,33 @@ namespace PortalRandkowy.api
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+            else
+            {
+                app.UseExceptionHandler(builder => 
+                {
+                    builder.Run(async context => 
+                    {
+                        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+                        var error = context.Features.Get<IExceptionHandlerFeature>();
+
+                        if (error != null)
+                        {
+                            context.Response.AddApplicationError(error.Error.Message);
+                            await context.Response.WriteAsync(error.Error.Message);
+                        }
+                    });
+                });
+            }
+
             seeder.SeedUsers();
 
             app.UseHttpsRedirection();
 
-            app.UseRouting();           
+            app.UseRouting();
 
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
-            
+
             app.UseAuthorization();
 
             app.UseAuthentication();
@@ -77,7 +99,7 @@ namespace PortalRandkowy.api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            }); 
+            });
         }
     }
 }

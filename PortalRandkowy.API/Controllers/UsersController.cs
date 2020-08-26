@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -26,10 +27,12 @@ namespace PortalRandkowy.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
+            
+
             var users = await _userRepository.GetUsers();
 
             var userToReturn = _mapper.Map<IEnumerable<UserForListDto>>(users);
-            
+            throw new Exception("Nowy");
             return Ok(userToReturn);
         }
 
