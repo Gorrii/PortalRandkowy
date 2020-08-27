@@ -4,7 +4,7 @@ import { Photo } from './photo';
 export interface user {
      /** Postawowe informacje */
      id: number;
-     username: string;
+     userName: string;
      gender: string;
      age: number;
      zodiacSign: string;

@@ -13,6 +13,7 @@ import { AuthService } from './_services/auth.service';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { UserListComponent } from './users/user-list/user-list.component';
+import { UserCardComponent } from './users/user-card/user-card.component';
 import { UserService } from './_services/user.service';
 import { AlertifyService } from './_services/alertify.service';
 import { LikesComponent } from './likes/likes.component';
@@ -34,7 +35,8 @@ export function GetToken() {
     RegisterComponent,
     UserListComponent,
     LikesComponent,
-    MessagesComponent
+    MessagesComponent,
+    UserCardComponent
   ],
   imports: [
     BrowserModule,

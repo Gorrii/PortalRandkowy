@@ -10,7 +10,7 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
 })
 export class UserListComponent implements OnInit {
 
-  users: user[];
+  user: user[];
 
   constructor(private userService: UserService, private alertify: AlertifyService )  { }
 
@@ -23,8 +23,8 @@ export class UserListComponent implements OnInit {
 
     loadUsers(){
 
-    this.userService.getUsers().subscribe((users: user[]) => {
-      this.users = users;
+    this.userService.getUsers().subscribe((user: user[]) => {
+      this.user = user;
     }, error => {
       this.alertify.error(error);
   });

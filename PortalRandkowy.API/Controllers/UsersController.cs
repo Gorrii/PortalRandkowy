@@ -32,7 +32,7 @@ namespace PortalRandkowy.API.Controllers
             var users = await _userRepository.GetUsers();
 
             var userToReturn = _mapper.Map<IEnumerable<UserForListDto>>(users);
-            throw new Exception("Nowy");
+            
             return Ok(userToReturn);
         }
 
